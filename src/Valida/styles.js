@@ -31,9 +31,9 @@ export const Container = styled.div`
 
   .login-container form input{
     width: 500px;
-		border-radius: 5px;
-		padding: 1rem;
-		background: #e8ebed;
+    border-radius: 5px;  
+    padding: 1rem;
+    background: #e8ebed;
     margin: 0;
     outline: 0;
     border: 2px solid #e8ebed;
