@@ -3,37 +3,36 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: 100%;
   align-items: center;
+  -webkit-font-smoothing: antialiased !important;
+  font-family: Roboto;
+  background: #ff9068;
+  background: linear-gradient(45deg, #fd746c , #ff9068);
 
   .login-container {
+    height: 100%;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: #ff9068;
-    background: linear-gradient(45deg, #fd746c , #ff9068);
-    height: 100%;
-    padding-bottom: 30px;
   }
 
   .login-container form {
-    min-width: 100px;
-    max-width: 80%;
-    min-height: 200px;
-    max-height: 100%;
-    background: #fafafa;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(25,25,25,.25);
-    padding: 3rem;
+    background: #fafafa;
+    padding: 5rem;
+    width: 600px;
   }
 
   .login-container form input{
-    width: 100%;
+    width: 500px;
 		border-radius: 5px;
-		padding: 1rem 4rem;
+		padding: 1rem;
 		background: #e8ebed;
     margin: 0;
     outline: 0;
@@ -47,35 +46,36 @@ export const Container = styled.div`
   }
 
   .login-container form button {
+    width: 500px;
     margin-top: 10px;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     border: 0;
     border-radius: 4px;
-    height: 48px;
-    width:100%;
     font-size: 16px;
     background: #DF4723;
     color: #fff;
-    font-weight: bold;
     cursor: pointer;
-  }
-  p {
-    color: #fff;
-  }
-
-  .result {
-    margin-top: 10%;
-    font-size: 18px;
-    font-family: Roboto;
-    display: flex;
-    justify-content: center;
-    align-items: left;
-    flex-direction: column;
   }
 
   label {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 20px;
-    font-weight: 900;
     color: #1E1F26;
+  }
+
+  .card {
+    margin-top: 50px;
+    width: 600px;
+  }
+
+  .card * {
+    color: #000;
+  }
+
+  .card h5 {
+    font-size: 16px;
   }
 `;

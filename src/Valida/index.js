@@ -1,23 +1,11 @@
 import React from 'react';
 import { Container } from './styles';
-
-const initialState = {
-  ip: "",
-  valido: "",
-  classe: "",
-  mascara: "",
-  funcMascara: "",
-  endRede: "",
-  endIniRede: "",
-  endFimRede: "",
-  endBroad: "",
-  resLAN: "",
-  ipBin: ""
-};
+import Card from 'react-bootstrap/Card';
+const initialState = {ip: "", valido: "", classe: "", mascara: "", endRede: "", endIniRede: "", endFimRede: "", endBroad: "", resLAN: "", ipBin: ""}
 
 export default class Valida extends React.Component {
   state = initialState;
-
+  
   handleChange = event => {
     const isCheckbox = event.target.type === "checkbox";
     this.setState({
@@ -29,21 +17,10 @@ export default class Valida extends React.Component {
 
   validate = () => {
     let ips = this.state.ip;
-    let octetos = ips.split(".")
-    let valido = "";
-    let classe = "";
-    let mascara = "";
-    let endRede = "";
-    let endIniRede = "";
-    let endFimRede= "";
-    let endBroad = "";
-    let resLAN = "";
-
-    let oct1 = octetos[0];
-    let oct2 = octetos[1];
-    let oct3 = octetos[2];
-    let oct4 = octetos[3];
-
+    let octetos = ips.split(".");
+    let oct1 = octetos[0], oct2 = octetos[1], oct3 = octetos[2], oct4 = octetos[3];
+    let valido = "", classe = "", mascara = "", endRede = "", endIniRede = "", endFimRede = "", endBroad = "", resLAN = "", ipBin = "";
+    
     if (octetos.length <= 3 || oct1 > 255 || oct2 > 255 || oct3 > 255 || oct4 > 255) { 
       classe = "IP Inválido!";
       valido = "IP Inválido!";
@@ -53,6 +30,7 @@ export default class Valida extends React.Component {
       endFimRede = "IP Inválido!";
       endBroad = "IP Inválido!";
       resLAN = "IP Inválido!";
+      ipBin = "IP Inválido!";
     } else {
       if (oct1 > 0 && oct1 <= 126) {
         classe = "Classe A";
@@ -63,6 +41,7 @@ export default class Valida extends React.Component {
         endFimRede = oct1 + ".255.255.254";
         endBroad = oct1 + ".255.255.255";
         resLAN = "10.0.0.0";
+        ipBin = parseInt(oct1).toString(2) + "." + parseInt(oct2).toString(2) + "." + parseInt(oct3).toString(2) + "." + parseInt(oct4).toString(2);
       } else if (oct1 >= 128 && oct1 <= 191) {
         classe = "Classe B";
         valido = "IP Válido!";
@@ -72,6 +51,7 @@ export default class Valida extends React.Component {
         endFimRede = oct1 + "." + oct2 + ".255.254";
         endBroad = oct1 + "." + oct2 + ".255.255";
         resLAN = "172.16.0.1";
+        ipBin = parseInt(oct1).toString(2) + "." + parseInt(oct2).toString(2) + "." + parseInt(oct3).toString(2) + "." + parseInt(oct4).toString(2);
       } else if(oct1 >= 192 && oct1 <= 223) {
         classe = "Classe C";
         valido = "IP Válido!";
@@ -81,6 +61,7 @@ export default class Valida extends React.Component {
         endFimRede = oct1 + "." + oct2 + "." + oct3 + ".254";
         endBroad = oct1 + "." + oct2 + "." + oct3 + ".255";
         resLAN = "192.168.0.0";
+        ipBin = parseInt(oct1).toString(2) + "." + parseInt(oct2).toString(2) + "." + parseInt(oct3).toString(2) + "." + parseInt(oct4).toString(2);
       } else if(oct1 >= 224 && oct1 <= 239) {
         classe = "Classe D";
         valido = "IP Válido!";
@@ -90,6 +71,7 @@ export default class Valida extends React.Component {
         endFimRede = " - - - - ";
         endBroad = " - - - - ";
         resLAN = " - - - - ";
+        ipBin = parseInt(oct1).toString(2) + "." + parseInt(oct2).toString(2) + "." + parseInt(oct3).toString(2) + "." + parseInt(oct4).toString(2);
       } else if(oct1 >= 240 && oct1 <= 254) {
         classe = "Classe E";
         valido = "IP Válido!";
@@ -99,6 +81,7 @@ export default class Valida extends React.Component {
         endFimRede = " - - - - ";
         endBroad = " - - - - ";
         resLAN = " - - - - ";
+        ipBin = parseInt(oct1).toString(2) + "." + parseInt(oct2).toString(2) + "." + parseInt(oct3).toString(2) + "." + parseInt(oct4).toString(2);
       } else {
         classe = "IP Inválido!";
         valido = "IP Inválido!";
@@ -108,27 +91,26 @@ export default class Valida extends React.Component {
         endFimRede = "IP Inválido!";
         endBroad = "IP Inválido!";
         resLAN = "IP Inválido!";
+        ipBin = "IP Inválido!";
       }
     }
-
-    if(classe || valido || mascara || endRede || endIniRede || endFimRede || endBroad || resLAN){
-      this.setState({classe, valido, mascara, endRede, endIniRede, endFimRede, endBroad, resLAN})
+    
+    if(classe || valido || mascara || endRede || endIniRede || endFimRede || endBroad || resLAN || ipBin){
+      this.setState({classe, valido, mascara, endRede, endIniRede, endFimRede, endBroad, resLAN, ipBin})
       return false
     }
-
     return true;
-  };
+  }
 
   handleSubmit = event => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
       console.log(this.state);
-      // clear form
       this.setState(initialState);
     }
   };
-
+  
   render() {
     return (
       <Container>
@@ -136,28 +118,26 @@ export default class Valida extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <div>
               <label htmlFor="ip">Insira o IP: </label>
-              <input
-                id="ip"
-                name="ip"
-                placeholder="(Ex: 192.168.254.6)"
-                value={this.state.ip}
-                onChange={this.handleChange}
-              />
+              <input id="ip" name="ip" placeholder="(Ex: 192.168.254.6)" value={this.state.ip} onChange={this.handleChange}/>
             </div>
             <button type="submit">Validar</button>
           </form>
-
-          <div className="result">
-            <strong> IP: {this.state.ip} </strong>
-            <strong> É válido?  {this.state.valido} </strong>
-            <strong> Classe: {this.state.classe} </strong>  
-            <strong> Mascara: {this.state.mascara} </strong>  
-            <strong> Endereço de rede: {this.state.endRede} </strong>
-            <strong> Endereço Inicial utilizável da Rede: {this.state.endIniRede} </strong>
-            <strong> Endereço Final utilizável da Rede: {this.state.endFimRede} </strong>
-            <strong> Endereço Broadcast: {this.state.endBroad} </strong>
-            <strong> Endereço LAN reservado: {this.state.resLAN} </strong>
-          </div>
+          <Card className="card text-center">
+            <Card.Header>Dados - IP</Card.Header>
+            <Card.Body>
+              <Card.Text className="text-left">IP: {this.state.ip}</Card.Text>
+              <Card.Text className="text-left">Válido? {this.state.valido}</Card.Text>
+              <Card.Text className="text-left">Classe: {this.state.classe}</Card.Text>
+              <Card.Text className="text-left">Máscara: {this.state.mascara}</Card.Text>
+              <Card.Text className="text-left">Endereço de Rede: {this.state.endRede}</Card.Text>
+              <Card.Text className="text-left">Endereço Inicial Utilizável da Rede: {this.state.endIniRede}</Card.Text>
+              <Card.Text className="text-left">Endereço Final Utilizável da Rede: {this.state.endFimRede}</Card.Text>
+              <Card.Text className="text-left">Endereço Broadcast: {this.state.endBroad}</Card.Text>
+              <Card.Text className="text-left">Endereço LAN Reservado: {this.state.resLAN}</Card.Text>
+              <Card.Text className="text-left">Endereço Binário: {this.state.ipBin}</Card.Text>
+            </Card.Body>
+            <Card.Footer className="text-muted">Developed by Nathalia Cosim :) </Card.Footer>
+          </Card>
         </div>
       </Container>
     );
